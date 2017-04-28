@@ -1,43 +1,29 @@
-################################################################################
-# $Id: Makefile,v 1.1 2012-05-12 19:48:02-07 dmfrank - $
-# Derek Frank, dmfrank@ucsc.edu
-# Harrison Vuong, hvuong@ucsc.edu
-# David Zou, dzou@ucsc.edu
+# Makefile for Programming Project #2's Reader/Writer Program
+# Names: David S. Zou, Derek M. Frank, Harrison Vuong 
+# CS111 Spring 2012 - Ethan Miller (Operating Systems)
 #
-# NAME
-#   Makefile - /usr/src/servers/pm/
-#
-################################################################################
+# A Makefile for the readers/writers problem.
 
+CSOURCE1 = rwinit.c
+CSOURCE2 = reader.c
+CSOURCE3 = writer.c
+CSOURCE4 = rwfree.c
+CSOURCES = ${CSOURCE1} ${CSOURCE2} ${CSOURCE3} ${CSOURCE4} 
+TARGET1  = initrw
+TARGET2  = reader
+TARGET3  = writer
+TARGET4  = freerw
+EXECBIN  = initrw reader writer freerw
+CC = gcc
 
-.include <bsd.own.mk>
+all :	
+	${CC} -o ${TARGET1} ${CSOURCE1} 
+	${CC} -o ${TARGET2} ${CSOURCE2} 
+	${CC} -o ${TARGET3} ${CSOURCE3}
+	${CC} -o ${TARGET4} ${CSOURCE4} 
 
-# Makefile for Process Manager (PM)
-PROG=	pm
-SRCS=	main.c forkexit.c break.c exec.c time.c alarm.c \
-	signal.c utility.c table.c getset.c misc.c \
-	profile.c schedule.c semaphore.c
+clean :
+	- rm -rf ${EXECBIN}
 
-.if ${USE_MCONTEXT} != "no"
-SRCS+= mcontext.c
-CPPFLAGS+= -DUSE_MCONTEXT
-.endif
-
-.if ${USE_TRACE} != "no"
-SRCS+= trace.c
-CPPFLAGS+= -DUSE_TRACE
-.endif
-
-DPADD+=	${LIBSYS} ${LIBTIMERS}
-LDADD+=	-lsys -ltimers
-
-MAN=
-
-BINDIR?= /usr/sbin
-
-CPPFLAGS.main.c+=	-I${MINIXSRCDIR}
-CPPFLAGS.misc.c+=	-I${MINIXSRCDIR}
-CPPFLAGS.schedule.c+=	-I${MINIXSRCDIR}
-CPPFLAGS.utility.c+=	-I${MINIXSRCDIR}
-
-.include <minix.bootprog.mk>
+spotless : clean
+- rm ${EXECBIN}
