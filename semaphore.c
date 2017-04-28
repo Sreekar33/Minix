@@ -70,7 +70,7 @@ struct semaphore {
 } semarray[NR_SEMS];
 int semcount = 0; // number of allocated semaphores in semarray
 
-PRIVATE void init_sems (void) {
+void init_sems (void) {
    // Initialize all the semaphores to NO_SEM to know they are free to use.
    int i;
    for (i = 0; i < NR_SEMS; ++i) {
@@ -96,7 +96,7 @@ PRIVATE void init_sems (void) {
 //   Returns 1 if the semaphore id exists in the global semaphore array.
 //   Otherwise, returns 0.
 //
-PRIVATE int sem_exists (sem)
+int sem_exists (sem)
    int sem;
 {
    // ERROR CHECKING //
@@ -125,7 +125,7 @@ PRIVATE int sem_exists (sem)
 //   semdown() would wait, but no process is currently waiting.  If an error
 //   occurs, return 0x8000000.
 //
-PUBLIC int do_semvalue (void) {
+int do_semvalue (void) {
    int exitstatus = ESEMVAL; // not yet successful, assume error
    // get message
    int sem = m_in.m1_i1;
@@ -184,7 +184,7 @@ PUBLIC int do_semvalue (void) {
 //       Semaphore identifier is already in use for an active semaphore (one
 //       that was freed with semfree() is not active).
 //
-PUBLIC int do_seminit (void) {
+int do_seminit (void) {
    // initialize semaphore array if not yet initialized
    if (semcount == 0) init_sems ();
 
@@ -285,7 +285,7 @@ PUBLIC int do_seminit (void) {
 //   outside this range, up to +/-10^6.  If the semup() call would result in a
 //   value above 10^6, return 0 and set the error to EOVERFLOW.
 //
-PUBLIC int do_semup (void) {
+int do_semup (void) {
    // return 1 if successful, 0 otherwise
    int exitstatus = RETERR; // not yet successful
    // get message
@@ -368,7 +368,7 @@ PUBLIC int do_semup (void) {
 //   outside this range, up to +/-10^6.  If the semdown() call would result in
 //   a value below -10^6, return 0 and set the erro to EOVERFLOW.
 //
-PUBLIC int do_semdown (void) {
+int do_semdown (void) {
    // return 1 if successful, 0 otherwise
    int exitstatus = RETERR; // not yet successful
    // get message
@@ -457,7 +457,7 @@ PUBLIC int do_semdown (void) {
 //     EEXIST
 //       The semaphore doesn't currently exist.
 //
-PUBLIC int do_semfree (void) {
+int do_semfree (void) {
    // return 1 if successful, 0 otherwise
    int exitstatus = RETERR; // not yet successful
    // get message
