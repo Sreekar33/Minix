@@ -47,7 +47,7 @@
 //   semdown() would wait, but no process is currently waiting.  If an error
 //   occurs, return 0x8000000.
 //
-PUBLIC int semvalue (int sem) {
+int semvalue (int sem) {
    message m;
    m.m1_i1 = sem;
    return (_syscall (PM_PROC_NR, SEMVALUE, &m));
@@ -83,7 +83,7 @@ PUBLIC int semvalue (int sem) {
 //       Semaphore identifier is already in use for an active semaphore (one
 //       that was freed with semfree() is not active).
 //
-PUBLIC int seminit (int sem, int value) {
+int seminit (int sem, int value) {
    message m;
    m.m1_i1 = sem;
    m.m1_i2 = value;
@@ -103,7 +103,7 @@ PUBLIC int seminit (int sem, int value) {
 //   -1000<=value<=1000, it may be inremented (or decremented) to a value
 //   outside this range, up to +/-10^6.
 //
-PUBLIC int semup (int sem) {
+int semup (int sem) {
    message m;
    m.m1_i1 = sem;
    return (_syscall (PM_PROC_NR, SEMUP, &m));
@@ -121,7 +121,7 @@ PUBLIC int semup (int sem) {
 //   -1000<=value<=1000, it may be inremented (or decremented) to a value
 //   outside this range, up to +/-10^6.
 //
-PUBLIC int semdown (int sem) {
+int semdown (int sem) {
    message m;
    m.m1_i1 = sem;
    return (_syscall (PM_PROC_NR, SEMDOWN, &m));
@@ -145,7 +145,7 @@ PUBLIC int semdown (int sem) {
 //     EEXIST
 //       The semaphore doesn't currently exist.
 //
-PUBLIC int semfree (int sem) {
+int semfree (int sem) {
    message m;
    m.m1_i1 = sem;
    return (_syscall (PM_PROC_NR, SEMFREE, &m));
